@@ -1,0 +1,4 @@
+TODO
+====
+
+* convert the recipe time from strings like "5m" or "5m30s" or "5:30" to seconds
