@@ -20,14 +20,18 @@ char *seconds_time(char *buff, int seconds);
 int
 main(int argc, char *argv[])
 {
+  if (argc < 4) {
+    fprintf(stderr, "Usage: %s <recipe-watts> <recipe-time> <target-watts>\n", argv[0]);
+    exit(EXIT_FAILURE);
+  }
+
   int recipe_watts = atoi(argv[1]);
   int recipe_time = atoi(argv[2]);
   int target_watts = atoi(argv[3]);
 
   int answer = convert_watt_seconds(recipe_watts, recipe_time, target_watts);
 
-  if (argc < 4 || answer <= 0) {
-    fprintf(stderr, "Usage: %s <recipe-watts> <recipe-time> <target-watts>\n", argv[0]);
+  if (answer <= 0) {
     fprintf(stderr, "Values must be greater than zero.\n");
     exit(EXIT_FAILURE);
   }
