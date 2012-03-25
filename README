@@ -1,0 +1,12 @@
+mwtime
+======
+
+If the recipe lists 5 minutes in a 1000W microwave, and you have an 800W
+microwave, how long to you cook the damn thing for?
+
+Answer: good thing it's only watts, you can use division.
+
+T = (rm / ym) * t
+
+where t is the listed time in seconds, rm is the recipie microwave power, ym is
+your microwave's power.
