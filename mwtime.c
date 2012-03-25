@@ -1,34 +1,42 @@
+/*
+ * mwtime.c
+ *
+ * Get the amount of time you should cook something in the microwave, if your
+ * microwave is a different wattage than specified in the recipe.
+ *
+ * Will Langstroth
+ *
+ * MIT License
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <time.h>
 
 int convert_watt_seconds(int recipe_w, int recipe_s, int target_w);
-int convert_watt_time(int recipe_w, time_t recipe_time, int target_w);
+char *seconds_time(char *buff, int seconds);
 
 int
 main(int argc, char *argv[])
 {
-  if (argc < 4) {
-    fprintf(stderr, "Usage: %s <recipe-watts> <recipe-time> <target-watts>\n", argv[0]);
-    exit(EXIT_FAILURE);
-  }
-
   int recipe_watts = atoi(argv[1]);
   int recipe_time = atoi(argv[2]);
   int target_watts = atoi(argv[3]);
 
   int answer = convert_watt_seconds(recipe_watts, recipe_time, target_watts);
 
-  printf("Your cooking time should be %d seconds\n", answer);
+  if (argc < 4 || answer <= 0) {
+    fprintf(stderr, "Usage: %s <recipe-watts> <recipe-time> <target-watts>\n", argv[0]);
+    fprintf(stderr, "Values must be greater than zero.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  char string_answer[64];
+
+  printf("Your cooking time should be %s.\n", seconds_time(string_answer, answer));
 
   exit(EXIT_SUCCESS);
-}
-
-// -----------------------------------------------------------------------------
-int
-convert_watt_time(int recipe_w, int target_w, time_t recipe_s) {
-  return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,4 +57,23 @@ convert_watt_seconds(int recipe_w, int recipe_s, int target_w)
   target_s = (float) recipe_w / target_w * recipe_s;
 
   return target_s;
+}
+
+// -----------------------------------------------------------------------------
+char *
+seconds_time(char *buffer, int seconds) {
+  int h, m, s;
+  static char buff[64];
+
+  if (seconds > 0) {
+    h = seconds / 3600;
+    m = seconds / 60;
+    s = seconds % 60;
+  } else {
+    return 0;
+  }
+
+  sprintf(buff, "%dh %dm %ds", h, m, s);
+
+  return buff;
 }
