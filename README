@@ -2,11 +2,24 @@ mwtime
 ======
 
 If the recipe lists 5 minutes in a 1000W microwave, and you have an 800W
-microwave, how long to you cook the damn thing for?
+microwave, how long do you cook the damn thing for?
 
 Answer: good thing it's only watts, you can use division.
 
 T = (rm / ym) * t
 
 where t is the listed time in seconds, rm is the recipie microwave power, ym is
-your microwave's power.
+your microwave's power. Super easy!
+
+But wait! There's more!
+
+Let's say you're really, really lazy, and you're on a C kick. You'd want that
+calculation as fast as possible, wouldn't you? Look no further, friends. Here is
+the most powerful microwave wattage time calculator you've ever seen.
+
+Usage
+-----
+
+mwtime <recipe-watts> <recipe-time> <target-time>
+
+where <recipe-time> is in seconds.
