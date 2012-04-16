@@ -17,19 +17,24 @@
 #define ANSWER_SIZE 64
 
 int convert_watt_seconds(int recipe_w, int recipe_s, int target_w);
-char *seconds_time(char *buff, int seconds);
+char *seconds_to_time(char *buff, int seconds);
 
 int
 main(int argc, char *argv[])
 {
-  if (argc < 4) {
-    fprintf(stderr, "Usage: %s <recipe-watts> <recipe-time> <target-watts>\n", argv[0]);
+  if (argc < 3 || argc > 4) {
+    fprintf(stderr, "Usage: %s <recipe-watts> <recipe-time> [target-watts]\n", argv[0]);
+    fprintf(stderr, "If target-watts is omitted, 900 is assumed");
     exit(EXIT_FAILURE);
   }
 
   int recipe_watts = atoi(argv[1]);
   int recipe_time = atoi(argv[2]);
-  int target_watts = atoi(argv[3]);
+
+  int target_watts = 900;
+  if (argc == 4) {
+    target_watts = atoi(argv[3]);
+  }
 
   int answer = convert_watt_seconds(recipe_watts, recipe_time, target_watts);
 
@@ -40,7 +45,7 @@ main(int argc, char *argv[])
 
   char string_answer[ANSWER_SIZE];
 
-  printf("Your cooking time should be %s.\n", seconds_time(string_answer, answer));
+  printf("Your cooking time should be %s.\n", seconds_to_time(string_answer, answer));
 
   exit(EXIT_SUCCESS);
 }
@@ -67,7 +72,7 @@ convert_watt_seconds(int recipe_w, int recipe_s, int target_w)
 
 // -----------------------------------------------------------------------------
 char *
-seconds_time(char *buffer, int seconds) {
+seconds_to_time(char *buffer, int seconds) {
   int h, m, s;
   static char buff[ANSWER_SIZE];
 
