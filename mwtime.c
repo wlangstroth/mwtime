@@ -16,8 +16,8 @@
 
 #define ANSWER_SIZE 64
 
-int convert_watt_seconds(int recipe_w, int recipe_s, int target_w);
-char *seconds_to_time(char *buff, int seconds);
+int convert_watt_seconds(int, int, int);
+char *seconds_to_time(int);
 
 int
 main(int argc, char *argv[])
@@ -43,9 +43,7 @@ main(int argc, char *argv[])
     exit(EXIT_FAILURE);
   }
 
-  char string_answer[ANSWER_SIZE];
-
-  printf("Your cooking time should be %s.\n", seconds_to_time(string_answer, answer));
+  printf("Your cooking time should be %s.\n", seconds_to_time(answer));
 
   exit(EXIT_SUCCESS);
 }
@@ -72,16 +70,17 @@ convert_watt_seconds(int recipe_w, int recipe_s, int target_w)
 
 // -----------------------------------------------------------------------------
 char *
-seconds_to_time(char *buffer, int seconds) {
+seconds_to_time(int seconds) {
   int h, m, s;
   static char buff[ANSWER_SIZE];
 
   if (seconds > 0) {
-    h = seconds / 3600;
     m = seconds / 60;
     s = seconds % 60;
+    h = m / 60;
+    m = m % 60;
   } else {
-    return 0;
+    return "0h 0m 0s";
   }
 
   sprintf(buff, "%dh %dm %ds", h, m, s);
