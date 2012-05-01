@@ -8,6 +8,7 @@
  *
  * MIT License
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,20 +46,18 @@ main(int argc, char *argv[])
 
   printf("Your cooking time should be %s.\n", seconds_to_time(answer));
 
-  exit(EXIT_SUCCESS);
+  return EXIT_SUCCESS;
 }
 
 // -----------------------------------------------------------------------------
+// recipe_w -> recipe watts
+// recipe_s -> recipe seconds
 int
 convert_watt_seconds(int recipe_w, int recipe_s, int target_w)
 {
   int target_s;
 
-  // For the trivial case
-  if (recipe_w == target_w)
-    return recipe_s;
-
-  // User fail
+  // Respond to user foolishness
   if (recipe_w <= 0 || recipe_s <=0 || target_w <= 0  ||
       recipe_w > 5000 || recipe_s > 32000 || target_w > 5000)
     return 0;
